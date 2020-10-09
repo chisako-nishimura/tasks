@@ -33,6 +33,7 @@ gem 'html2slim'
 gem 'devise'
 gem 'devise-i18n'
 gem 'devise-i18n-views'
+gem 'devise_invitable'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
