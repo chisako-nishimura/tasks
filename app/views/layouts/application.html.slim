@@ -13,10 +13,10 @@ html
       nav
         - if user_signed_in?
           strong= link_to current_user.email, pages_show_path
-          .edit-profile= link_to 'プロフィール変更', edit_user_registration_path
+          / #TODO: プロフィール変更機能はあってもいい
+          /.edit-profile= link_to 'プロフィール変更', edit_user_registration_path
           .logout= link_to 'ログアウト', destroy_user_session_path, method: :delete
         - else
-          .sign-up= link_to 'サインアップ', new_user_registration_path
           .login= link_to 'ログイン', new_user_session_path
     p.notice
       = notice
