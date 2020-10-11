@@ -1,4 +1,4 @@
-import '@mdi/font/css/materialdesignicons.css'
+// import '@mdi/font/css/materialdesignicons.css'
 import Vue from 'vue/dist/vue.esm';
 import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
@@ -14,9 +14,9 @@ Vue.use(Vuetify);
 
 new Vue({
     vuetify: new Vuetify(),
-    icons: {
-        iconfont:  'mdi'
-    },
+    // icons: {
+    //     iconfont:  'mdi'
+    // },
     el: '.js-tasksIndex',
     data: {
         taskInfo: {},
