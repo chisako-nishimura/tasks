@@ -1,7 +1,7 @@
 // import '@mdi/font/css/materialdesignicons.css'
-import Vue from 'vue/dist/vue.esm';
-import Vuetify from "vuetify";
-import "vuetify/dist/vuetify.min.css";
+// import Vue from 'vue/dist/vue.esm';
+// import Vuetify from "vuetify";
+// import "vuetify/dist/vuetify.min.css";
 
 import axios from 'axios';
 axios.defaults.headers.common = {
