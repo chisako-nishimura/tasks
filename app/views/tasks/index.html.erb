@@ -1,6 +1,12 @@
 <h1>タスク管理</h1>
 <div class="container js-tasksIndex">
   <v-app id="inspire">
+    <v-col cols="3" >
+      <v-btn class="" elevation="1" v-on:click="showFormModal(null)">
+        <v-icon dark>mdi-note-plus-outline</v-icon>タスク登録
+      </v-btn>
+    </v-col>
+
     <v-simple-table>
       <template v-slot:default>
         <thead>
@@ -35,10 +41,6 @@
         </tbody>
       </template>
     </v-simple-table>
-
-  <v-btn class="ma-2" elevation="1" v-on:click="showFormModal(null)">
-    <v-icon dark>mdi-note-plus-outline</v-icon>タスク登録
-  </v-btn>
 
   <modal :height="400" name="task-modal">
     <v-form ref="form" v-model="valid">
@@ -86,4 +88,5 @@
   </modal>
 </v-app>
 </div>
-<%= ::Temple::Utils.escape_html_safe((javascript_pack_tag 'tasks')) %>
+
+<%= javascript_pack_tag 'tasks' %>
