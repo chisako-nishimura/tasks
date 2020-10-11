@@ -4,7 +4,7 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.all
+    @tasks = Task.all.order(status: :asc, id: :desc)
   end
 
   # GET /tasks/1
@@ -25,6 +25,7 @@ class TasksController < ApplicationController
   # POST /tasks.json
   def create
     @task = Task.new(task_params)
+    @task.creator = current_user
 
     respond_to do |format|
       if @task.save

@@ -1,0 +1,89 @@
+<h1>タスク管理</h1>
+<div class="container js-tasksIndex">
+  <v-app id="inspire">
+    <v-simple-table>
+      <template v-slot:default>
+        <thead>
+        <tr>
+          <th class="text-center">#</th>
+          <th class="text-left">タイトル</th>
+          <th class="text-left">内容</th>
+          <th class="text-center">担当者</th>
+          <th class="text-center">状態</th>
+          <th class="text-center"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="task in tasks" :key="task.id">
+          <td class="text-center">{{ task.id }}</td>
+          <td class="text-left">{{ task.title }}</td>
+          <td class="text-left">{{ task.content }}</td>
+          <td class="text-center">{{ task.user }}</td>
+          <td class="text-center">{{ task.status }}</td>
+          <td  class="text-center">
+            <v-btn class="ma-2" elevation="1" v-on:click="showModal(task.id)">
+              <v-icon dark>mdi-details</v-icon>
+            </v-btn>
+            <v-btn class="ma-2" elevation="1" v-on:click="showFormModal(task)">
+              <v-icon dark>mdi-circle-edit-outline</v-icon>
+            </v-btn>
+            <v-btn class="ma-2" elevation="1" v-on:click="deleteTask(task)">
+              <v-icon dark>mdi-trash-can</v-icon>
+            </v-btn>
+          </td>
+        </tr>
+        </tbody>
+      </template>
+    </v-simple-table>
+
+  <v-btn class="ma-2" elevation="1" v-on:click="showFormModal(null)">
+    <v-icon dark>mdi-note-plus-outline</v-icon>タスク登録
+  </v-btn>
+
+  <modal :height="400" name="task-modal">
+    <v-form ref="form" v-model="valid">
+      <v-container>
+        <v-row>
+          <v-col cols="12" >
+            <v-text-field v-model="form.title" :rules="titleRules" label="タイトル" required></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12">
+            <v-text-field v-model="form.content" :rules="contentRules" label="内容" required></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="6">
+            <v-text-field v-model="form.user_id" :rules="creatorRules" label="担当者" required></v-text-field>
+          </v-col>
+          <v-col cols="6">
+            <v-select v-model="form.status" :items="statuses" :rules="[v => !!v || '状態は必須です']" label="状態" required>
+            </v-select>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="3" v-if="createFlg">
+            <v-btn class="ma-2" elevation="1"  v-on:click="createTask">登録</v-btn>
+          </v-col>
+          <v-col cols="3" v-else>
+            <v-btn class="ma-2" elevation="1"  v-on:click="updateTask">更新</v-btn>
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-form>
+  </modal>
+
+  <modal :height="400" name="task-show-modal">
+    <div class="ma-6">
+      <div class="text-subtitle-1">状態: {{taskInfo.status}}　　担当者: {{taskInfo.user}} </div>
+      <p class="display-1 text--primary">
+        {{taskInfo.title}}
+      </p>
+      <p class="text-body-1">{{taskInfo.content}}</p>
+      <p class="text-caption">登録者: {{taskInfo.creator}} </p>
+    </div>
+  </modal>
+</v-app>
+</div>
+<%= ::Temple::Utils.escape_html_safe((javascript_pack_tag 'tasks')) %>
