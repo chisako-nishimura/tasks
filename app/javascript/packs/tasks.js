@@ -46,7 +46,7 @@ new Vue({
             this.$modal.show('task-modal');
         },
 
-        createTask: function () {
+        createTask: function (e) {
             const task = Object.assign({},this.form);
 
 
@@ -57,6 +57,7 @@ new Vue({
             }, (error) => {
                 console.log(error);
             });
+            e.preventDefault();
         }
 
     }
