@@ -1,0 +1,71 @@
+h1 Listing tasks
+
+.container.js-tasksIndex
+  table
+    thead
+      tr
+        th タイトル
+        th 内容
+        th 担当者
+        th 登録者
+        th 状態
+        th
+
+    tbody v-for="task in tasks"
+
+      tr
+        td = "{{task.title}}"
+        td = "{{task.content}}"
+        td = "{{task.user}}"
+        td = "{{task.creator}}"
+        td = "{{task.status}}"
+        td
+          button v-on:click="showModal(task.id)" 詳細
+          button v-on:click="showFormModal(task)" 編集
+          button v-on:click="deleteTask(task)" 削除
+
+  button.btn.btn-primary.my-2 v-on:click="showFormModal(null)" タスク登録
+
+  modal :height="400" name="task-modal"
+    .card
+      .card-body
+        .card-title
+          h2(v-if="createFlg")　タスク登録
+          h2(v-else) タスク編集
+        form.card-text autocomplete="off"
+          .form-group
+            label for="title"  TITLE
+            input#title.form-control placeholder="タイトルを入力してください" type="text" v-model="form.title"
+          .form-group
+            label for="content"  CONTENT
+            input#content.form-control placeholder="詳細を入力してください" type="text" v-model="form.content"
+          .form-group
+            label for="user-id"  user_id
+            input#user-id.form-control placeholder="user_id" type="text" v-model="form.user_id"
+          .form-group
+            label for="created-by"  created_by
+            input#created-by.form-control placeholder="created_by" type="text" v-model="form.created_by"
+          .form-group
+            label for="status"  STATUS
+            input#status.form-control placeholder="status" type="text" v-model="form.status"
+          button.btn.btn-primary(v-on:click="createTask" v-if="createFlg") 登録
+          button.btn.btn-primary(v-on:click="updateTask" v-else) 更新
+
+  modal :height="400" name="task-show-modal"
+    .card
+      .card-body
+        .card-title
+          h2 タスク詳細
+        form.card-text
+          span.card-title
+            = "{{ taskInfo.title }}"
+          .detail
+            = "{{ taskInfo.content }}"
+          .user
+            = "{{ taskInfo.user}}"
+          .creator
+            = "{{ taskInfo.creator}}"
+          .status
+            = "{{ taskInfo.status}}"
+
+= javascript_pack_tag 'tasks'
