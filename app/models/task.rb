@@ -1,6 +1,6 @@
 class Task < ApplicationRecord
   belongs_to :user
-  #belongs_to :created_by, class_name: 'User', foreign_key: 'created_by'
+  belongs_to :creator, class_name: 'User', foreign_key: 'created_by'
 
   enum status: { todo: 0, doing: 1, done: 2 }
 

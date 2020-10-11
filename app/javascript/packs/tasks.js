@@ -11,16 +11,19 @@ new Vue({
     el: '.js-tasksIndex',
     data: {
         taskInfo: {},
-        taskInfoBool: false,
-        msg: "test",
         tasks: [],
         form:{
+            id: '',
             title:'',
             content:'',
             status: '',
             user_id: '',
+            user_name: '',
             created_by: '',
+            created_name: '',
         },
+        editIndex: -1,
+        createFlg: false,
     },
     mounted: function() {
         this.fetchTasks();
@@ -36,13 +39,21 @@ new Vue({
                 console.log(error);
             });
         },
-        setTaskInfo(id){
+        showModal(id){
             axios.get(`tasks/${id}.json`).then(res => {
                 this.taskInfo = res.data;
-                this.taskInfoBool = true;
+                this.$modal.show('task-show-modal');
+                //this.taskInfoBool = true;
             });
         },
-        showModal(){
+        showFormModal(task){
+            if (task == null) {
+                this.createFlg = true;
+            } else {
+                this.createFlg = false;
+                this.editIndex = this.tasks.indexOf(task);
+                this.form = Object.assign({}, task);
+            }
             this.$modal.show('task-modal');
         },
 
@@ -58,7 +69,28 @@ new Vue({
                 console.log(error);
             });
             e.preventDefault();
-        }
+        },
+        updateTask : function(e) {
+            const task = this.tasks[this.editIndex];
+            axios.patch('tasks/'+task.id+'.json', { task: this.form }).then((res) => {
 
+                Object.assign(this.tasks[this.editIndex], this.form);
+                this.$modal.hide('task-modal');
+            }, (error) => {
+                console.log(error);
+            });
+            e.preventDefault();
+        },
+        deleteTask(task) {
+            if (!confirm('削除しますか？')) {
+                return;
+            }
+            axios.delete('tasks/'+task.id+'.json').then((res) => {
+                const index = this.tasks.indexOf(task);
+                this.tasks.splice(index, 1);
+            }, (error) => {
+                console.log(error);
+            });
+        }
     }
 });
