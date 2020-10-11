@@ -7,7 +7,7 @@ json.title task.title
 json.content task.content
 json.status task.status
 json.user_id task.user_id
-json.user task.user.email
+json.user task.user.username
 json.created_by task.created_by
-json.creator task.creator.email
+json.creator task.creator.username
 
